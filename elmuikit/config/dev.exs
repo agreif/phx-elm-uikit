@@ -16,7 +16,8 @@ config :elmuikit, ElmuikitWeb.Endpoint,
   secret_key_base: "emlSdCdnSpH4O+CU0Dt2Cj1lk6GDN/z9K8wUF63EUAAdqe7jkKOSzsi0sNd4Edz8",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    node: ["./build.js", "--watch", cd: Path.expand("../assets/elm", __DIR__)]
   ]
 
 # ## SSL Support

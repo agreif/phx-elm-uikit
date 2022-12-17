@@ -43,3 +43,10 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
 
+import "../css/uikit.css"
+import uikit from "../vendor/uikit"
+import uikit_icons from "../vendor/uikit-icons"
+uikit.use(uikit_icons)
+window.UIkit = uikit
+
+import './elm.js'
