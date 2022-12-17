@@ -1,7 +1,7 @@
 module Main exposing (..)
 import Html exposing (text)
 
-name = "Alex" -- set name to your name!
+name = "AleXX"
 
 main =
   text ("Hello " ++ name ++ "!")

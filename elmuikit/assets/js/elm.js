@@ -3007,7 +3007,7 @@
               return 3;
           }
         };
-        var $author$project$Main$name = "Alex";
+        var $author$project$Main$name = "AleXX";
         var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
         var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
         var $author$project$Main$main = $elm$html$Html$text("Hello " + ($author$project$Main$name + "!"));
