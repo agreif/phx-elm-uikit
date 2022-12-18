@@ -2,6 +2,8 @@
 
 ## Elm & Phoenix Setup
 
+Ref: https://github.com/dwyl/phoenix-elm-starter
+
 ```
 $ cd <proect-root>
 
