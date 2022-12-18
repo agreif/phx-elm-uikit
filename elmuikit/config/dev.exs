@@ -17,7 +17,7 @@ config :elmuikit, ElmuikitWeb.Endpoint,
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
-    node: ["./build.js", "--watch", cd: Path.expand("../assets/elm", __DIR__)]
+    # node: ["./build.js", "--watch", cd: Path.expand("../assets/elm", __DIR__)]
   ]
 
 # ## SSL Support
@@ -64,3 +64,8 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :say,
+   exec: "say",
+   # exec_args: ~w(-v somevoice),
+   ssh_args: ~w(-p 2222 localhost)

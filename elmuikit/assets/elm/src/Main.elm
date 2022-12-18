@@ -6,10 +6,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Url
 
-
-
 -- MAIN
-
 
 main : Program (Maybe String) Model Msg
 main =
@@ -22,16 +19,12 @@ main =
     , onUrlRequest = LinkClicked
     }
 
-
-
 -- MODEL
-
 
 type alias Model =
   { key : Nav.Key
   , url : Url.Url
   }
-
 
 init : Maybe String -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init maybeUrlStr url key =
@@ -42,14 +35,11 @@ init maybeUrlStr url key =
         _ -> ( Model key url, Cmd.none )
     _ -> ( Model key url, Cmd.none )
 
-
 -- UPDATE
-
 
 type Msg
   = LinkClicked Browser.UrlRequest
   | UrlChanged Url.Url
-
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -67,19 +57,13 @@ update msg model =
       , Cmd.none
       )
 
-
-
 -- SUBSCRIPTIONS
-
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
   Sub.none
 
-
-
 -- VIEW
-
 
 view : Model -> Browser.Document Msg
 view model =
@@ -93,7 +77,6 @@ view model =
           ]
       ]
   }
-
 
 viewLink : String -> Html msg
 viewLink path =
