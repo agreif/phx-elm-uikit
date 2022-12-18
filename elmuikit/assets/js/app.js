@@ -49,4 +49,12 @@ import uikit_icons from "../vendor/uikit-icons"
 uikit.use(uikit_icons)
 window.UIkit = uikit
 
-import elm from '../vendor/elm'
+
+import {Elm} from '../vendor/elm'
+
+const $elmDiv = document.querySelector('#elm-target');
+Elm.Main.init({
+    node: $elmDiv,
+    //flags: null,
+    flags: $elmDiv.getAttribute('page')
+});

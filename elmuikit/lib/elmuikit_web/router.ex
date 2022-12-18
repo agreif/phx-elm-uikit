@@ -18,6 +18,7 @@ defmodule ElmuikitWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/:page", PageController, :index
   end
 
   # Other scopes may use custom stacks.
