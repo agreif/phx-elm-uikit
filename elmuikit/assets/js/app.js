@@ -49,4 +49,4 @@ import uikit_icons from "../vendor/uikit-icons"
 uikit.use(uikit_icons)
 window.UIkit = uikit
 
-import elm from './vendor/elm'
+import elm from '../vendor/elm'
