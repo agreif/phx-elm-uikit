@@ -8,11 +8,40 @@ This is a proof-of-concept project with the following technologies:
 2. UIkit
 3. Phoenix Web Server
 
+## Use-Cases
+
+It is a really simple simulation of switching pages...
+
+1. Home page
+2. Profile page
+
+Here is how it looks like...
+
+User clicked 'Home' menu
+
+![](images/image1.png)
+
+User clicked 'Profile' menu
+
+![](images/image2.png)
+
+## Elm Files
+
+the Elm files are located here:
+
+```
+assets/elm/src/
+├── Main.elm
+├── HomePage.elm
+├── ProfilePage.elm
+├── Common.elm
+└── ErrorPage.elm
+```
+
 ## The Elm Model
 
 Despite it is a Single Page Elm app, different pages are simulated with the contents in the Elm `Model`.
 The Model holds the `Page` and the data that is used for the presentation of the page. E.g. Which menu item is active and what page contents should be displayed.
-
 
 ```
 type alias Model =
@@ -28,23 +57,6 @@ type Page
 ```
 
 The Page Data is currently read from a JSON String, but can be easily ported to fetch it from a server.
-
-## Use-Cases
-
-It is a really simple simulation of switching pages
-
-1. Home page
-2. Profile page
-
-Here is how it looks like...
-
-User clicked 'Home' menu
-
-![](images/image1.png)
-
-User clicked 'Profile' menu
-
-![](images/image2.png)
 
 ## Elm & Phoenix Setup
 
