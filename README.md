@@ -38,6 +38,17 @@ assets/elm/src/
 └── ErrorPage.elm
 ```
 
+## TODOs
+
+[ ] Pull the Data from a server
+[x] Add UIKit layout
+[x] Read the Data for the Model from JSON strings
+[x] Configure Phoenix to to return the right Elm page on different browser URL calls
+[x] Create the `Model` with `Page` alternatives
+[x] Setup Elm compile watcher with esbuild
+[x] Setup Elm
+[x] Setup Phoenix project
+
 ## The Elm Model
 
 Despite it is a Single Page Elm app, different pages are simulated with the contents in the Elm `Model`.

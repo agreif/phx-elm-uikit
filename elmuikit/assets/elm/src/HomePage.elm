@@ -62,6 +62,7 @@ homePageView data =
                 data.nav
             , h2 []
                 [ text data.title ]
+            , p [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor" ]
             ]
         ]
     }
