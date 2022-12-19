@@ -29,7 +29,14 @@ type Page
 
 The Page Data is currently read from a JSON String, but can be easily ported to fetch it from a server.
 
-## Pictures
+## Use-Cases
+
+It is a really simple simulation of switching pages
+
+1. Home page
+2. Profile page
+
+Here is how it looks like...
 
 User clicked 'Home' menu
 
