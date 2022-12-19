@@ -29,7 +29,8 @@ defmodule ElmWatcher do
       {_, result} =
         System.cmd(
           System.cwd() <> "/node_modules/.bin/elm",
-          ["make", System.cwd() <> "/assets/elm/src/Main.elm", "--optimize", "--output=" <> System.cwd() <> "/assets/vendor/elm.js"],
+          # ["make", System.cwd() <> "/assets/elm/src/Main.elm", "--optimize", "--output=" <> System.cwd() <> "/assets/vendor/elm.js"],
+          ["make", System.cwd() <> "/assets/elm/src/Main.elm", "--optimize", "--output=" <> "/tmp/elm.js"],
           cd: System.cwd() <> "/assets/elm"
         )
 
