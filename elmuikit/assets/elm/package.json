@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "esbuild-plugin-elm": "^0.0.12"
+  },
+  "dependencies": {
+    "elm-format": "^0.8.5"
   }
 }
