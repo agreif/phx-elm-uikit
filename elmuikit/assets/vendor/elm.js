@@ -3150,11 +3150,11 @@
         var $elm$core$Maybe$Just = function(a) {
           return { $: "Just", a };
         };
-        var $author$project$Main$LinkClicked = function(a) {
+        var $author$project$Common$LinkClicked = function(a) {
           return { $: "LinkClicked", a };
         };
         var $elm$core$Maybe$Nothing = { $: "Nothing" };
-        var $author$project$Main$UrlChanged = function(a) {
+        var $author$project$Common$UrlChanged = function(a) {
           return { $: "UrlChanged", a };
         };
         var $elm$core$Basics$EQ = { $: "EQ" };
@@ -9611,16 +9611,17 @@
         var $author$project$Common$NavData = function(items) {
           return { items };
         };
-        var $author$project$Common$NavItem = F2(
-          function(label, active) {
-            return { active, label };
+        var $author$project$Common$NavItem = F3(
+          function(label, url, active) {
+            return { active, label, url };
           }
         );
         var $elm$json$Json$Decode$bool = _Json_decodeBool;
-        var $author$project$Common$navItemDecoder = A3(
-          $elm$json$Json$Decode$map2,
+        var $author$project$Common$navItemDecoder = A4(
+          $elm$json$Json$Decode$map3,
           $author$project$Common$NavItem,
           A2($elm$json$Json$Decode$field, "label", $elm$json$Json$Decode$string),
+          A2($elm$json$Json$Decode$field, "url", $elm$json$Json$Decode$string),
           A2($elm$json$Json$Decode$field, "active", $elm$json$Json$Decode$bool)
         );
         var $author$project$Common$navDecoder = A2(
@@ -9635,7 +9636,7 @@
           A2($elm$json$Json$Decode$field, "nav", $author$project$Common$navDecoder)
         );
         var $author$project$HomePage$genHomeData = function() {
-          var json = '{\n      "title": "Home Page",\n      "nav":\n      [\n        {\n          "label": "Home",\n          "active": true\n        },\n        {\n          "label": "Profile",\n          "active": false\n        }\n      ]\n  }';
+          var json = '{\n      "title": "Home Page",\n      "nav":\n      [\n        {\n          "label": "Home",\n          "url": "home",\n          "active": true\n        },\n        {\n          "label": "Profile",\n          "url": "profile",\n          "active": false\n        }\n      ]\n  }';
           var _v0 = A2($elm$json$Json$Decode$decodeString, $author$project$HomePage$pageDecoder, json);
           if (_v0.$ === "Ok") {
             var data = _v0.a;
@@ -9659,7 +9660,7 @@
           A2($elm$json$Json$Decode$field, "nav", $author$project$Common$navDecoder)
         );
         var $author$project$ProfilePage$genProfileData = function() {
-          var json = '{\n      "title": "Home Page",\n      "nav":\n      [\n        {\n          "label": "Home",\n          "active": false\n        },\n        {\n          "label": "Profile",\n          "active": true\n        }\n      ]\n  }';
+          var json = '{\n      "title": "Profile Page",\n      "nav":\n      [\n        {\n          "label": "Home",\n          "url": "home",\n          "active": false\n        },\n        {\n          "label": "Profile",\n          "url": "profile",\n          "active": true\n        }\n      ]\n  }';
           var _v0 = A2($elm$json$Json$Decode$decodeString, $author$project$ProfilePage$pageDecoder, json);
           if (_v0.$ === "Ok") {
             var data = _v0.a;
@@ -9675,21 +9676,21 @@
           var _v0 = url.path;
           if (_v0 === "/profile") {
             var _v1 = $author$project$ProfilePage$genProfileData;
-            if (_v1.$ === "Err") {
-              var error = _v1.a;
-              return $author$project$Main$ErrorPage(error);
-            } else {
+            if (_v1.$ === "Ok") {
               var data = _v1.a;
               return $author$project$Main$ProfilePage(data);
+            } else {
+              var error = _v1.a;
+              return $author$project$Main$ErrorPage(error);
             }
           } else {
             var _v2 = $author$project$HomePage$genHomeData;
-            if (_v2.$ === "Err") {
-              var error = _v2.a;
-              return $author$project$Main$ErrorPage(error);
-            } else {
+            if (_v2.$ === "Ok") {
               var data = _v2.a;
               return $author$project$Main$HomePage(data);
+            } else {
+              var error = _v2.a;
+              return $author$project$Main$ErrorPage(error);
             }
           }
         };
@@ -9829,76 +9830,132 @@
             }
           }
         );
-        var $elm$html$Html$h1 = _VirtualDom_node("h1");
-        var $author$project$Main$pageTitle = function(page) {
-          switch (page.$) {
-            case "HomePage":
-              var data = page.a;
-              return data.title;
-            case "ProfilePage":
-              var data = page.a;
-              return data.title;
-            default:
-              var message = page.a;
-              return message;
-          }
-        };
-        var $author$project$Main$viewLink = function(path) {
-          return A2(
-            $elm$html$Html$li,
-            _List_Nil,
-            _List_fromArray(
-              [
-                A2(
-                  $elm$html$Html$a,
-                  _List_fromArray(
-                    [
-                      $elm$html$Html$Attributes$href(path)
-                    ]
-                  ),
-                  _List_fromArray(
-                    [
-                      $elm$html$Html$text(path)
-                    ]
-                  )
-                )
-              ]
-            )
-          );
-        };
-        var $author$project$Main$view = function(model) {
+        var $author$project$ErrorPage$errorPageView = function(message) {
           return {
             body: _List_fromArray(
               [
-                A2(
-                  $elm$html$Html$h1,
-                  _List_Nil,
-                  _List_fromArray(
-                    [
-                      $elm$html$Html$text(
-                        $author$project$Main$pageTitle(model.page)
-                      )
-                    ]
-                  )
-                ),
-                A2(
-                  $elm$html$Html$ul,
-                  _List_Nil,
-                  _List_fromArray(
-                    [
-                      $author$project$Main$viewLink("/home"),
-                      $author$project$Main$viewLink("/profile"),
-                      $author$project$Main$viewLink("https://google.com")
-                    ]
-                  )
-                )
+                $elm$html$Html$text(message)
               ]
             ),
-            title: "URL Interceptor"
+            title: "error"
           };
         };
+        var $elm$html$Html$h1 = _VirtualDom_node("h1");
+        var $elm$html$Html$h2 = _VirtualDom_node("h2");
+        var $author$project$Common$navItemViewLink = function(item) {
+          var _v0 = item.active;
+          if (_v0) {
+            return A2(
+              $elm$html$Html$li,
+              _List_Nil,
+              _List_fromArray(
+                [
+                  $elm$html$Html$text(item.label)
+                ]
+              )
+            );
+          } else {
+            return A2(
+              $elm$html$Html$li,
+              _List_Nil,
+              _List_fromArray(
+                [
+                  A2(
+                    $elm$html$Html$a,
+                    _List_fromArray(
+                      [
+                        $elm$html$Html$Attributes$href(item.url)
+                      ]
+                    ),
+                    _List_fromArray(
+                      [
+                        $elm$html$Html$text(item.label)
+                      ]
+                    )
+                  )
+                ]
+              )
+            );
+          }
+        };
+        var $author$project$Common$navView = function(data) {
+          return _List_fromArray(
+            [
+              A2(
+                $elm$html$Html$h2,
+                _List_Nil,
+                _List_fromArray(
+                  [
+                    $elm$html$Html$text("Navigation")
+                  ]
+                )
+              ),
+              A2(
+                $elm$html$Html$ul,
+                _List_Nil,
+                A2($elm$core$List$map, $author$project$Common$navItemViewLink, data.items)
+              )
+            ]
+          );
+        };
+        var $author$project$HomePage$homePageView = function(data) {
+          return {
+            body: _Utils_ap(
+              _List_fromArray(
+                [
+                  A2(
+                    $elm$html$Html$h1,
+                    _List_Nil,
+                    _List_fromArray(
+                      [
+                        $elm$html$Html$text(data.title)
+                      ]
+                    )
+                  )
+                ]
+              ),
+              $author$project$Common$navView(data.nav)
+            ),
+            title: data.title
+          };
+        };
+        var $author$project$ProfilePage$profilePageView = function(data) {
+          return {
+            body: _Utils_ap(
+              _List_fromArray(
+                [
+                  A2(
+                    $elm$html$Html$h1,
+                    _List_Nil,
+                    _List_fromArray(
+                      [
+                        $elm$html$Html$text(data.title)
+                      ]
+                    )
+                  )
+                ]
+              ),
+              $author$project$Common$navView(data.nav)
+            ),
+            title: data.title
+          };
+        };
+        var $author$project$Main$view = function(model) {
+          var _v0 = model.page;
+          switch (_v0.$) {
+            case "HomePage":
+              var data = _v0.a;
+              return $author$project$HomePage$homePageView(data);
+            case "ProfilePage":
+              var data = _v0.a;
+              return $author$project$ProfilePage$profilePageView(data);
+            default:
+              var message = _v0.a;
+              return $author$project$ErrorPage$errorPageView(message);
+          }
+        };
         var $author$project$Main$main = $elm$browser$Browser$application(
-          { init: $author$project$Main$init, onUrlChange: $author$project$Main$UrlChanged, onUrlRequest: $author$project$Main$LinkClicked, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view }
+          { init: $author$project$Main$init, onUrlChange: $author$project$Common$UrlChanged, onUrlRequest: $author$project$Common$LinkClicked, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view }
         );
         _Platform_export({ "Main": { "init": $author$project$Main$main(
           $elm$json$Json$Decode$oneOf(
@@ -9909,7 +9966,7 @@
               ]
             )
           )
-        )({ "versions": { "elm": "0.19.1" }, "types": { "message": "Main.Msg", "aliases": { "Url.Url": { "args": [], "type": "{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }" } }, "unions": { "Main.Msg": { "args": [], "tags": { "LinkClicked": ["Browser.UrlRequest"], "UrlChanged": ["Url.Url"] } }, "Basics.Int": { "args": [], "tags": { "Int": [] } }, "Maybe.Maybe": { "args": ["a"], "tags": { "Just": ["a"], "Nothing": [] } }, "Url.Protocol": { "args": [], "tags": { "Http": [], "Https": [] } }, "String.String": { "args": [], "tags": { "String": [] } }, "Browser.UrlRequest": { "args": [], "tags": { "Internal": ["Url.Url"], "External": ["String.String"] } } } } }) } });
+        )({ "versions": { "elm": "0.19.1" }, "types": { "message": "Common.Msg", "aliases": { "Url.Url": { "args": [], "type": "{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }" } }, "unions": { "Common.Msg": { "args": [], "tags": { "LinkClicked": ["Browser.UrlRequest"], "UrlChanged": ["Url.Url"] } }, "Basics.Int": { "args": [], "tags": { "Int": [] } }, "Maybe.Maybe": { "args": ["a"], "tags": { "Just": ["a"], "Nothing": [] } }, "Url.Protocol": { "args": [], "tags": { "Http": [], "Https": [] } }, "String.String": { "args": [], "tags": { "String": [] } }, "Browser.UrlRequest": { "args": [], "tags": { "Internal": ["Url.Url"], "External": ["String.String"] } } } } }) } });
       })(exports);
     }
   });

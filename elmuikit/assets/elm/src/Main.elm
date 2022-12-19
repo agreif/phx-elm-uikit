@@ -2,12 +2,12 @@ module Main exposing (main)
 
 import Browser
 import Browser.Navigation as Nav
-import Html exposing (..)
-import Html.Attributes exposing (..)
 import Url
 
+import Common exposing (..)
 import HomePage exposing (..)
 import ProfilePage exposing (..)
+import ErrorPage exposing (..)
 
 -- MAIN
 
@@ -38,12 +38,12 @@ getPage url =
   case url.path of
     "/profile" ->
       case genProfileData of
-        Err error -> ErrorPage error
         Ok data -> ProfilePage data
+        Err error -> ErrorPage error
     _ ->
       case genHomeData of
-        Err error -> ErrorPage error
         Ok data -> HomePage data
+        Err error -> ErrorPage error
 
 
 init : Maybe String -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
@@ -59,10 +59,6 @@ init maybeUrlStr url key =
          , Cmd.none )
 
 -- UPDATE
-
-type Msg
-  = LinkClicked Browser.UrlRequest
-  | UrlChanged Url.Url
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -88,25 +84,7 @@ subscriptions _ =
 
 view : Model -> Browser.Document Msg
 view model =
-  { title = "URL Interceptor"
-  , body =
-      [h1 [] [ text (pageTitle model.page) ]
-      , ul []
-          [ viewLink "/home"
-          , viewLink "/profile"
-          , viewLink "https://google.com"
-          ]
-      ]
-  }
-
-pageTitle : Page -> String
-pageTitle page =
-  case page of
-    HomePage data -> data.title
-    ProfilePage data -> data.title
-    ErrorPage message -> message
-
-viewLink : String -> Html msg
-viewLink path =
-  li [] [ a [ href path ] [ text path ] ]
-
+  case model.page of
+    HomePage data -> homePageView data
+    ProfilePage data -> profilePageView data
+    ErrorPage message -> errorPageView message
