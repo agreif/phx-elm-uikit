@@ -1,7 +1,7 @@
 defmodule ElmWatcher do
   @moduledoc """
   Watches changes on elm files and compiles if needed.
-  Then tells the mac to say "ok" or "elm error"
+  Then tells the mac to say "ok" or "error"
 
   Run it with
   $ mix run elm_watcher.exs
@@ -36,7 +36,7 @@ defmodule ElmWatcher do
 
       case result do
         0 -> say("ok")
-        _ -> say("elm error")
+        _ -> say("error")
       end
 
       IO.puts("-----------------------------------------------------------")
