@@ -6,6 +6,9 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Url
 
+import HomePage exposing (..)
+import ProfilePage exposing (..)
+
 -- MAIN
 
 main : Program (Maybe String) Model Msg
@@ -23,32 +26,24 @@ main =
 
 type alias Model =
   { key : Nav.Key
-  , url : Url.Url
   , page : Page
   }
 
-type Page = HomePage HomeData | ProfilePage ProfileData
-
-type alias HomeData =
-  { title : String
-  }
-
-type alias ProfileData =
-  { title : String
-  }
-
-
-genHomeData : HomeData
-genHomeData = {title = "Home Page"}
-
-genProfileData : ProfileData
-genProfileData = {title = "Profile Page"}
+type Page = HomePage HomeData
+          | ProfilePage ProfileData
+          | ErrorPage String
 
 getPage : Url.Url -> Page
 getPage url =
   case url.path of
-    "/profile" -> ProfilePage genProfileData
-    _ -> HomePage genHomeData
+    "/profile" ->
+      case genProfileData of
+        Err error -> ErrorPage error
+        Ok data -> ProfilePage data
+    _ ->
+      case genHomeData of
+        Err error -> ErrorPage error
+        Ok data -> HomePage data
 
 
 init : Maybe String -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
@@ -56,11 +51,11 @@ init maybeUrlStr url key =
   case maybeUrlStr of
     Just urlStr ->
       case Url.fromString urlStr of
-        Just url2 -> ( Model key url2 (getPage url2)
+        Just url2 -> ( Model key (getPage url2)
                      , Nav.pushUrl key (Url.toString url2) )
-        _ -> ( Model key url (getPage url)
+        _ -> ( Model key (getPage url)
              , Cmd.none )
-    _ -> ( Model key url (getPage url)
+    _ -> ( Model key (getPage url)
          , Cmd.none )
 
 -- UPDATE
@@ -79,7 +74,7 @@ update msg model =
         Browser.External href ->
           ( model, Nav.load href )
     UrlChanged url ->
-      ( { model | url = url, page = getPage url }
+      ( { model | page = getPage url }
       , Cmd.none
       )
 
@@ -96,8 +91,6 @@ view model =
   { title = "URL Interceptor"
   , body =
       [h1 [] [ text (pageTitle model.page) ]
-      , text "The current URL is: "
-      , b [] [ text (Url.toString model.url) ]
       , ul []
           [ viewLink "/home"
           , viewLink "/profile"
@@ -111,6 +104,7 @@ pageTitle page =
   case page of
     HomePage data -> data.title
     ProfilePage data -> data.title
+    ErrorPage message -> message
 
 viewLink : String -> Html msg
 viewLink path =

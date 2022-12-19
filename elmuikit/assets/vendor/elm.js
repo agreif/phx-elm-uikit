@@ -9589,25 +9589,108 @@
             }
         };
         var $elm$browser$Browser$application = _Browser_application;
-        var $author$project$Main$Model = F3(
-          function(key, url, page) {
-            return { key, page, url };
+        var $author$project$Main$Model = F2(
+          function(key, page) {
+            return { key, page };
           }
         );
+        var $author$project$Main$ErrorPage = function(a) {
+          return { $: "ErrorPage", a };
+        };
         var $author$project$Main$HomePage = function(a) {
           return { $: "HomePage", a };
         };
         var $author$project$Main$ProfilePage = function(a) {
           return { $: "ProfilePage", a };
         };
-        var $author$project$Main$genHomeData = { title: "Home Page" };
-        var $author$project$Main$genProfileData = { title: "Profile Page" };
+        var $author$project$HomePage$HomeData = F2(
+          function(title, nav) {
+            return { nav, title };
+          }
+        );
+        var $author$project$Common$NavData = function(items) {
+          return { items };
+        };
+        var $author$project$Common$NavItem = F2(
+          function(label, active) {
+            return { active, label };
+          }
+        );
+        var $elm$json$Json$Decode$bool = _Json_decodeBool;
+        var $author$project$Common$navItemDecoder = A3(
+          $elm$json$Json$Decode$map2,
+          $author$project$Common$NavItem,
+          A2($elm$json$Json$Decode$field, "label", $elm$json$Json$Decode$string),
+          A2($elm$json$Json$Decode$field, "active", $elm$json$Json$Decode$bool)
+        );
+        var $author$project$Common$navDecoder = A2(
+          $elm$json$Json$Decode$map,
+          $author$project$Common$NavData,
+          $elm$json$Json$Decode$list($author$project$Common$navItemDecoder)
+        );
+        var $author$project$HomePage$pageDecoder = A3(
+          $elm$json$Json$Decode$map2,
+          $author$project$HomePage$HomeData,
+          A2($elm$json$Json$Decode$field, "title", $elm$json$Json$Decode$string),
+          A2($elm$json$Json$Decode$field, "nav", $author$project$Common$navDecoder)
+        );
+        var $author$project$HomePage$genHomeData = function() {
+          var json = '{\n      "title": "Home Page",\n      "nav":\n      [\n        {\n          "label": "Home",\n          "active": true\n        },\n        {\n          "label": "Profile",\n          "active": false\n        }\n      ]\n  }';
+          var _v0 = A2($elm$json$Json$Decode$decodeString, $author$project$HomePage$pageDecoder, json);
+          if (_v0.$ === "Ok") {
+            var data = _v0.a;
+            return $elm$core$Result$Ok(data);
+          } else {
+            var jsonError = _v0.a;
+            return $elm$core$Result$Err(
+              $elm$json$Json$Decode$errorToString(jsonError)
+            );
+          }
+        }();
+        var $author$project$ProfilePage$ProfileData = F2(
+          function(title, nav) {
+            return { nav, title };
+          }
+        );
+        var $author$project$ProfilePage$pageDecoder = A3(
+          $elm$json$Json$Decode$map2,
+          $author$project$ProfilePage$ProfileData,
+          A2($elm$json$Json$Decode$field, "title", $elm$json$Json$Decode$string),
+          A2($elm$json$Json$Decode$field, "nav", $author$project$Common$navDecoder)
+        );
+        var $author$project$ProfilePage$genProfileData = function() {
+          var json = '{\n      "title": "Home Page",\n      "nav":\n      [\n        {\n          "label": "Home",\n          "active": false\n        },\n        {\n          "label": "Profile",\n          "active": true\n        }\n      ]\n  }';
+          var _v0 = A2($elm$json$Json$Decode$decodeString, $author$project$ProfilePage$pageDecoder, json);
+          if (_v0.$ === "Ok") {
+            var data = _v0.a;
+            return $elm$core$Result$Ok(data);
+          } else {
+            var jsonError = _v0.a;
+            return $elm$core$Result$Err(
+              $elm$json$Json$Decode$errorToString(jsonError)
+            );
+          }
+        }();
         var $author$project$Main$getPage = function(url) {
           var _v0 = url.path;
           if (_v0 === "/profile") {
-            return $author$project$Main$ProfilePage($author$project$Main$genProfileData);
+            var _v1 = $author$project$ProfilePage$genProfileData;
+            if (_v1.$ === "Err") {
+              var error = _v1.a;
+              return $author$project$Main$ErrorPage(error);
+            } else {
+              var data = _v1.a;
+              return $author$project$Main$ProfilePage(data);
+            }
           } else {
-            return $author$project$Main$HomePage($author$project$Main$genHomeData);
+            var _v2 = $author$project$HomePage$genHomeData;
+            if (_v2.$ === "Err") {
+              var error = _v2.a;
+              return $author$project$Main$ErrorPage(error);
+            } else {
+              var data = _v2.a;
+              return $author$project$Main$HomePage(data);
+            }
           }
         };
         var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
@@ -9670,10 +9753,9 @@
               if (_v1.$ === "Just") {
                 var url2 = _v1.a;
                 return _Utils_Tuple2(
-                  A3(
+                  A2(
                     $author$project$Main$Model,
                     key,
-                    url2,
                     $author$project$Main$getPage(url2)
                   ),
                   A2(
@@ -9684,10 +9766,9 @@
                 );
               } else {
                 return _Utils_Tuple2(
-                  A3(
+                  A2(
                     $author$project$Main$Model,
                     key,
-                    url,
                     $author$project$Main$getPage(url)
                   ),
                   $elm$core$Platform$Cmd$none
@@ -9695,10 +9776,9 @@
               }
             } else {
               return _Utils_Tuple2(
-                A3(
+                A2(
                   $author$project$Main$Model,
                   key,
-                  url,
                   $author$project$Main$getPage(url)
                 ),
                 $elm$core$Platform$Cmd$none
@@ -9741,8 +9821,7 @@
                 _Utils_update(
                   model,
                   {
-                    page: $author$project$Main$getPage(url),
-                    url
+                    page: $author$project$Main$getPage(url)
                   }
                 ),
                 $elm$core$Platform$Cmd$none
@@ -9750,15 +9829,18 @@
             }
           }
         );
-        var $elm$html$Html$b = _VirtualDom_node("b");
         var $elm$html$Html$h1 = _VirtualDom_node("h1");
         var $author$project$Main$pageTitle = function(page) {
-          if (page.$ === "HomePage") {
-            var data = page.a;
-            return data.title;
-          } else {
-            var data = page.a;
-            return data.title;
+          switch (page.$) {
+            case "HomePage":
+              var data = page.a;
+              return data.title;
+            case "ProfilePage":
+              var data = page.a;
+              return data.title;
+            default:
+              var message = page.a;
+              return message;
           }
         };
         var $author$project$Main$viewLink = function(path) {
@@ -9795,18 +9877,6 @@
                     [
                       $elm$html$Html$text(
                         $author$project$Main$pageTitle(model.page)
-                      )
-                    ]
-                  )
-                ),
-                $elm$html$Html$text("The current URL is: "),
-                A2(
-                  $elm$html$Html$b,
-                  _List_Nil,
-                  _List_fromArray(
-                    [
-                      $elm$html$Html$text(
-                        $elm$url$Url$toString(model.url)
                       )
                     ]
                   )
