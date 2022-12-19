@@ -9589,11 +9589,27 @@
             }
         };
         var $elm$browser$Browser$application = _Browser_application;
-        var $author$project$Main$Model = F2(
-          function(key, url) {
-            return { key, url };
+        var $author$project$Main$Model = F3(
+          function(key, url, page) {
+            return { key, page, url };
           }
         );
+        var $author$project$Main$HomePage = function(a) {
+          return { $: "HomePage", a };
+        };
+        var $author$project$Main$ProfilePage = function(a) {
+          return { $: "ProfilePage", a };
+        };
+        var $author$project$Main$genHomeData = { title: "Home Page" };
+        var $author$project$Main$genProfileData = { title: "Profile Page" };
+        var $author$project$Main$getPage = function(url) {
+          var _v0 = url.path;
+          if (_v0 === "/profile") {
+            return $author$project$Main$ProfilePage($author$project$Main$genProfileData);
+          } else {
+            return $author$project$Main$HomePage($author$project$Main$genHomeData);
+          }
+        };
         var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
         var $elm$url$Url$addPort = F2(
           function(maybePort, starter) {
@@ -9654,7 +9670,12 @@
               if (_v1.$ === "Just") {
                 var url2 = _v1.a;
                 return _Utils_Tuple2(
-                  A2($author$project$Main$Model, key, url2),
+                  A3(
+                    $author$project$Main$Model,
+                    key,
+                    url2,
+                    $author$project$Main$getPage(url2)
+                  ),
                   A2(
                     $elm$browser$Browser$Navigation$pushUrl,
                     key,
@@ -9663,13 +9684,23 @@
                 );
               } else {
                 return _Utils_Tuple2(
-                  A2($author$project$Main$Model, key, url),
+                  A3(
+                    $author$project$Main$Model,
+                    key,
+                    url,
+                    $author$project$Main$getPage(url)
+                  ),
                   $elm$core$Platform$Cmd$none
                 );
               }
             } else {
               return _Utils_Tuple2(
-                A2($author$project$Main$Model, key, url),
+                A3(
+                  $author$project$Main$Model,
+                  key,
+                  url,
+                  $author$project$Main$getPage(url)
+                ),
                 $elm$core$Platform$Cmd$none
               );
             }
@@ -9709,7 +9740,10 @@
               return _Utils_Tuple2(
                 _Utils_update(
                   model,
-                  { url }
+                  {
+                    page: $author$project$Main$getPage(url),
+                    url
+                  }
                 ),
                 $elm$core$Platform$Cmd$none
               );
@@ -9717,6 +9751,16 @@
           }
         );
         var $elm$html$Html$b = _VirtualDom_node("b");
+        var $elm$html$Html$h1 = _VirtualDom_node("h1");
+        var $author$project$Main$pageTitle = function(page) {
+          if (page.$ === "HomePage") {
+            var data = page.a;
+            return data.title;
+          } else {
+            var data = page.a;
+            return data.title;
+          }
+        };
         var $author$project$Main$viewLink = function(path) {
           return A2(
             $elm$html$Html$li,
@@ -9744,6 +9788,17 @@
           return {
             body: _List_fromArray(
               [
+                A2(
+                  $elm$html$Html$h1,
+                  _List_Nil,
+                  _List_fromArray(
+                    [
+                      $elm$html$Html$text(
+                        $author$project$Main$pageTitle(model.page)
+                      )
+                    ]
+                  )
+                ),
                 $elm$html$Html$text("The current URL is: "),
                 A2(
                   $elm$html$Html$b,
@@ -9762,7 +9817,8 @@
                   _List_fromArray(
                     [
                       $author$project$Main$viewLink("/home"),
-                      $author$project$Main$viewLink("/profile")
+                      $author$project$Main$viewLink("/profile"),
+                      $author$project$Main$viewLink("https://google.com")
                     ]
                   )
                 )
