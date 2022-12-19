@@ -26,7 +26,7 @@ main =
   text ("Hello " ++ name ++ "!")
 EOF
 
-$ cat > src/index.js <<EOF
+$ cat > src/index.js <<"EOF"
 import { Elm } from './Main.elm';
 
 const $root = document.createElement('div');
@@ -37,13 +37,13 @@ Elm.Main.init({
 });
 EOF
 
-$ cat > build.js <<EOF
+$ cat > build.js <<"EOF"
 const esbuild = require('esbuild');
 const ElmPlugin = require('esbuild-plugin-elm');
 
 esbuild.build({
   entryPoints: ['src/index.js'],
-  outfile: '../js/elm.js',
+  outfile: '../vendor/elm.js',
   bundle: true,
   watch: process.argv.includes('--watch'),
   plugins: [
@@ -58,7 +58,7 @@ EOF
 $ cd ..
 
 $ cat >> js/app.js <<EOF
-import elm from './elm.js'
+import elm from '../vendor/elm'
 EOF
 
 $ cd ..
