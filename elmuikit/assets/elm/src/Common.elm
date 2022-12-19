@@ -51,19 +51,47 @@ navItemDecoder =
         (J.field "active" J.bool)
 
 
-navView : NavData -> List (Html Msg)
+navView : NavData -> Html Msg
 navView data =
-    [ h2 [] [ text "Navigation" ]
-    , ul []
-        (List.map navItemViewLink data.items)
-    ]
+    nav
+        [ class "uk-navbar-container uk-margin"
+        , attribute "uk-navbar" ""
+        ]
+        [ div
+            [ class "uk-navbar-left uk-margin-left"
+            ]
+            [ a
+                [ class "uk-navbar-item uk-logo"
+                , href "#"
+                ]
+                [ text "Phx-Elm" ]
+            , ul
+                [ class "uk-navbar-nav"
+                ]
+                (List.map navItemViewLink data.items)
+            ]
+        , div
+            [ class "uk-navbar-right uk-margin-right"
+            ]
+            []
+        ]
 
 
 navItemViewLink : NavItem -> Html Msg
 navItemViewLink item =
-    case item.active of
-        True ->
-            li [] [ text item.label ]
+    let
+        activeClass =
+            if item.active then
+                "uk-active"
 
-        False ->
-            li [] [ a [ href item.url ] [ text item.label ] ]
+            else
+                ""
+    in
+    li
+        [ class activeClass
+        ]
+        [ a
+            [ href item.url
+            ]
+            [ text item.label ]
+        ]

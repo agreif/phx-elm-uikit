@@ -9840,102 +9840,154 @@
             title: "error"
           };
         };
-        var $elm$html$Html$h1 = _VirtualDom_node("h1");
         var $elm$html$Html$h2 = _VirtualDom_node("h2");
+        var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
+        var $elm$html$Html$nav = _VirtualDom_node("nav");
         var $author$project$Common$navItemViewLink = function(item) {
-          var _v0 = item.active;
-          if (_v0) {
-            return A2(
-              $elm$html$Html$li,
-              _List_Nil,
-              _List_fromArray(
-                [
-                  $elm$html$Html$text(item.label)
-                ]
-              )
-            );
-          } else {
-            return A2(
-              $elm$html$Html$li,
-              _List_Nil,
-              _List_fromArray(
-                [
-                  A2(
-                    $elm$html$Html$a,
-                    _List_fromArray(
-                      [
-                        $elm$html$Html$Attributes$href(item.url)
-                      ]
-                    ),
-                    _List_fromArray(
-                      [
-                        $elm$html$Html$text(item.label)
-                      ]
-                    )
+          var activeClass = item.active ? "uk-active" : "";
+          return A2(
+            $elm$html$Html$li,
+            _List_fromArray(
+              [
+                $elm$html$Html$Attributes$class(activeClass)
+              ]
+            ),
+            _List_fromArray(
+              [
+                A2(
+                  $elm$html$Html$a,
+                  _List_fromArray(
+                    [
+                      $elm$html$Html$Attributes$href(item.url)
+                    ]
+                  ),
+                  _List_fromArray(
+                    [
+                      $elm$html$Html$text(item.label)
+                    ]
                   )
-                ]
-              )
-            );
-          }
+                )
+              ]
+            )
+          );
         };
         var $author$project$Common$navView = function(data) {
-          return _List_fromArray(
-            [
-              A2(
-                $elm$html$Html$h2,
-                _List_Nil,
-                _List_fromArray(
-                  [
-                    $elm$html$Html$text("Navigation")
-                  ]
+          return A2(
+            $elm$html$Html$nav,
+            _List_fromArray(
+              [
+                $elm$html$Html$Attributes$class("uk-navbar-container uk-margin"),
+                A2($elm$html$Html$Attributes$attribute, "uk-navbar", "")
+              ]
+            ),
+            _List_fromArray(
+              [
+                A2(
+                  $elm$html$Html$div,
+                  _List_fromArray(
+                    [
+                      $elm$html$Html$Attributes$class("uk-navbar-left uk-margin-left")
+                    ]
+                  ),
+                  _List_fromArray(
+                    [
+                      A2(
+                        $elm$html$Html$a,
+                        _List_fromArray(
+                          [
+                            $elm$html$Html$Attributes$class("uk-navbar-item uk-logo"),
+                            $elm$html$Html$Attributes$href("#")
+                          ]
+                        ),
+                        _List_fromArray(
+                          [
+                            $elm$html$Html$text("Phx-Elm")
+                          ]
+                        )
+                      ),
+                      A2(
+                        $elm$html$Html$ul,
+                        _List_fromArray(
+                          [
+                            $elm$html$Html$Attributes$class("uk-navbar-nav")
+                          ]
+                        ),
+                        A2($elm$core$List$map, $author$project$Common$navItemViewLink, data.items)
+                      )
+                    ]
+                  )
+                ),
+                A2(
+                  $elm$html$Html$div,
+                  _List_fromArray(
+                    [
+                      $elm$html$Html$Attributes$class("uk-navbar-right uk-margin-right")
+                    ]
+                  ),
+                  _List_Nil
                 )
-              ),
-              A2(
-                $elm$html$Html$ul,
-                _List_Nil,
-                A2($elm$core$List$map, $author$project$Common$navItemViewLink, data.items)
-              )
-            ]
+              ]
+            )
           );
         };
         var $author$project$HomePage$homePageView = function(data) {
           return {
-            body: _Utils_ap(
-              _List_fromArray(
-                [
-                  A2(
-                    $elm$html$Html$h1,
-                    _List_Nil,
-                    _List_fromArray(
-                      [
-                        $elm$html$Html$text(data.title)
-                      ]
-                    )
+            body: _List_fromArray(
+              [
+                A2(
+                  $elm$html$Html$div,
+                  _List_fromArray(
+                    [
+                      $elm$html$Html$Attributes$class("uk-container uk-margin-left")
+                    ]
+                  ),
+                  _List_fromArray(
+                    [
+                      $author$project$Common$navView(data.nav),
+                      A2(
+                        $elm$html$Html$h2,
+                        _List_Nil,
+                        _List_fromArray(
+                          [
+                            $elm$html$Html$text(data.title)
+                          ]
+                        )
+                      )
+                    ]
                   )
-                ]
-              ),
-              $author$project$Common$navView(data.nav)
+                )
+              ]
             ),
             title: data.title
           };
         };
         var $author$project$ProfilePage$profilePageView = function(data) {
           return {
-            body: _Utils_ap(
-              _List_fromArray(
-                [
-                  A2(
-                    $elm$html$Html$h1,
-                    _List_Nil,
-                    _List_fromArray(
-                      [
-                        $elm$html$Html$text(data.title)
-                      ]
-                    )
+            body: _List_fromArray(
+              [
+                A2(
+                  $elm$html$Html$div,
+                  _List_fromArray(
+                    [
+                      $elm$html$Html$Attributes$class("uk-container uk-margin-left")
+                    ]
+                  ),
+                  _List_fromArray(
+                    [
+                      $author$project$Common$navView(data.nav),
+                      A2(
+                        $elm$html$Html$h2,
+                        _List_Nil,
+                        _List_fromArray(
+                          [
+                            $elm$html$Html$text(data.title)
+                          ]
+                        )
+                      )
+                    ]
                   )
-                ]
-              ),
-              $author$project$Common$navView(data.nav)
+                )
+              ]
             ),
             title: data.title
           };

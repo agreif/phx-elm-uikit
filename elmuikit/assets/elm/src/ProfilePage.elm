@@ -57,6 +57,11 @@ profilePageView : ProfileData -> Browser.Document Msg
 profilePageView data =
     { title = data.title
     , body =
-        [ h1 [] [ text data.title ] ]
-            ++ navView data.nav
+        [ div [ class "uk-container uk-margin-left" ]
+            [ navView
+                data.nav
+            , h2 []
+                [ text data.title ]
+            ]
+        ]
     }
