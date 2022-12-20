@@ -85,7 +85,8 @@ homePageView data =
                 data.nav
             , h2 []
                 [ text data.title ]
-            , p [] [ text page.body ]
+            , b [] [ text "body: " ]
+            , span [] [ text page.body ]
             ]
         ]
     }

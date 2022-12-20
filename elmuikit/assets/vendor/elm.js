@@ -9869,6 +9869,7 @@
             title: "error"
           };
         };
+        var $elm$html$Html$b = _VirtualDom_node("b");
         var $elm$html$Html$h2 = _VirtualDom_node("h2");
         var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
         var $elm$html$Html$nav = _VirtualDom_node("nav");
@@ -9984,7 +9985,16 @@
                         )
                       ),
                       A2(
-                        $elm$html$Html$p,
+                        $elm$html$Html$b,
+                        _List_Nil,
+                        _List_fromArray(
+                          [
+                            $elm$html$Html$text("body: ")
+                          ]
+                        )
+                      ),
+                      A2(
+                        $elm$html$Html$span,
                         _List_Nil,
                         _List_fromArray(
                           [
@@ -10000,6 +10010,7 @@
             title: data.title
           };
         };
+        var $elm$html$Html$hr = _VirtualDom_node("hr");
         var $author$project$ProfilePage$profilePageView = function(data) {
           var page = data.page;
           return {
@@ -10025,7 +10036,16 @@
                         )
                       ),
                       A2(
-                        $elm$html$Html$p,
+                        $elm$html$Html$b,
+                        _List_Nil,
+                        _List_fromArray(
+                          [
+                            $elm$html$Html$text("text1: ")
+                          ]
+                        )
+                      ),
+                      A2(
+                        $elm$html$Html$span,
                         _List_Nil,
                         _List_fromArray(
                           [
@@ -10033,8 +10053,18 @@
                           ]
                         )
                       ),
+                      A2($elm$html$Html$hr, _List_Nil, _List_Nil),
                       A2(
-                        $elm$html$Html$p,
+                        $elm$html$Html$b,
+                        _List_Nil,
+                        _List_fromArray(
+                          [
+                            $elm$html$Html$text("text2: ")
+                          ]
+                        )
+                      ),
+                      A2(
+                        $elm$html$Html$span,
                         _List_Nil,
                         _List_fromArray(
                           [
