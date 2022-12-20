@@ -66,6 +66,7 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 config :say,
-   exec: "say",
+   # exec: "say",
    # exec_args: ~w(-v somevoice),
-   ssh_args: ~w(-p 2222 localhost)
+   # ssh_args: ~w(-p 2222 localhost)
+   func: &IO.inspect/1

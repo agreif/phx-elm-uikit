@@ -9603,9 +9603,9 @@
         var $author$project$Main$ProfilePage = function(a) {
           return { $: "ProfilePage", a };
         };
-        var $author$project$HomePage$HomeData = F2(
-          function(title, nav) {
-            return { nav, title };
+        var $author$project$HomePage$HomeData = F3(
+          function(title, nav, page) {
+            return { nav, page, title };
           }
         );
         var $author$project$Common$NavData = function(items) {
@@ -9629,15 +9629,28 @@
           $author$project$Common$NavData,
           $elm$json$Json$Decode$list($author$project$Common$navItemDecoder)
         );
-        var $author$project$HomePage$pageDecoder = A3(
-          $elm$json$Json$Decode$map2,
+        var $author$project$HomePage$PageData = function(body) {
+          return { body };
+        };
+        var $author$project$HomePage$pageDecoder = A2(
+          $elm$json$Json$Decode$map,
+          $author$project$HomePage$PageData,
+          A2($elm$json$Json$Decode$field, "body", $elm$json$Json$Decode$string)
+        );
+        var $author$project$HomePage$dataDecoder = A4(
+          $elm$json$Json$Decode$map3,
           $author$project$HomePage$HomeData,
           A2($elm$json$Json$Decode$field, "title", $elm$json$Json$Decode$string),
-          A2($elm$json$Json$Decode$field, "nav", $author$project$Common$navDecoder)
+          A2($elm$json$Json$Decode$field, "nav", $author$project$Common$navDecoder),
+          A2(
+            $elm$json$Json$Decode$field,
+            "page",
+            A2($elm$json$Json$Decode$field, "home", $author$project$HomePage$pageDecoder)
+          )
         );
         var $author$project$HomePage$genHomeData = function() {
-          var json = '{\n      "title": "Home Page",\n      "nav":\n      [\n        {\n          "label": "Home",\n          "url": "home",\n          "active": true\n        },\n        {\n          "label": "Profile",\n          "url": "profile",\n          "active": false\n        }\n      ]\n  }';
-          var _v0 = A2($elm$json$Json$Decode$decodeString, $author$project$HomePage$pageDecoder, json);
+          var json = '{\n      "title": "Home Page",\n      "nav":\n      [\n        {\n          "label": "Home",\n          "url": "home",\n          "active": true\n        },\n        {\n          "label": "Profile",\n          "url": "profile",\n          "active": false\n        }\n      ],\n      "page": {\n        "home": {\n          "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"\n        },\n        "profile": null\n      }\n  }';
+          var _v0 = A2($elm$json$Json$Decode$decodeString, $author$project$HomePage$dataDecoder, json);
           if (_v0.$ === "Ok") {
             var data = _v0.a;
             return $elm$core$Result$Ok(data);
@@ -9648,20 +9661,36 @@
             );
           }
         }();
-        var $author$project$ProfilePage$ProfileData = F2(
-          function(title, nav) {
-            return { nav, title };
+        var $author$project$ProfilePage$ProfileData = F3(
+          function(title, nav, page) {
+            return { nav, page, title };
+          }
+        );
+        var $author$project$ProfilePage$PageData = F2(
+          function(text1, text2) {
+            return { text1, text2 };
           }
         );
         var $author$project$ProfilePage$pageDecoder = A3(
           $elm$json$Json$Decode$map2,
+          $author$project$ProfilePage$PageData,
+          A2($elm$json$Json$Decode$field, "text1", $elm$json$Json$Decode$string),
+          A2($elm$json$Json$Decode$field, "text2", $elm$json$Json$Decode$string)
+        );
+        var $author$project$ProfilePage$dataDecoder = A4(
+          $elm$json$Json$Decode$map3,
           $author$project$ProfilePage$ProfileData,
           A2($elm$json$Json$Decode$field, "title", $elm$json$Json$Decode$string),
-          A2($elm$json$Json$Decode$field, "nav", $author$project$Common$navDecoder)
+          A2($elm$json$Json$Decode$field, "nav", $author$project$Common$navDecoder),
+          A2(
+            $elm$json$Json$Decode$field,
+            "page",
+            A2($elm$json$Json$Decode$field, "profile", $author$project$ProfilePage$pageDecoder)
+          )
         );
         var $author$project$ProfilePage$genProfileData = function() {
-          var json = '{\n      "title": "Profile Page",\n      "nav":\n      [\n        {\n          "label": "Home",\n          "url": "home",\n          "active": false\n        },\n        {\n          "label": "Profile",\n          "url": "profile",\n          "active": true\n        }\n      ]\n  }';
-          var _v0 = A2($elm$json$Json$Decode$decodeString, $author$project$ProfilePage$pageDecoder, json);
+          var json = '{\n      "title": "Profile Page",\n      "nav":\n      [\n        {\n          "label": "Home",\n          "url": "home",\n          "active": false\n        },\n        {\n          "label": "Profile",\n          "url": "profile",\n          "active": true\n        }\n      ],\n      "page": {\n        "home": null,\n        "profile": {\n          "text1": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",\n          "text2": "Some other text"\n        }\n      }\n  }';
+          var _v0 = A2($elm$json$Json$Decode$decodeString, $author$project$ProfilePage$dataDecoder, json);
           if (_v0.$ === "Ok") {
             var data = _v0.a;
             return $elm$core$Result$Ok(data);
@@ -9931,6 +9960,7 @@
           );
         };
         var $author$project$HomePage$homePageView = function(data) {
+          var page = data.page;
           return {
             body: _List_fromArray(
               [
@@ -9958,7 +9988,7 @@
                         _List_Nil,
                         _List_fromArray(
                           [
-                            $elm$html$Html$text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor")
+                            $elm$html$Html$text(page.body)
                           ]
                         )
                       )
@@ -9971,6 +10001,7 @@
           };
         };
         var $author$project$ProfilePage$profilePageView = function(data) {
+          var page = data.page;
           return {
             body: _List_fromArray(
               [
@@ -9998,7 +10029,16 @@
                         _List_Nil,
                         _List_fromArray(
                           [
-                            $elm$html$Html$text("Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?")
+                            $elm$html$Html$text(page.text1)
+                          ]
+                        )
+                      ),
+                      A2(
+                        $elm$html$Html$p,
+                        _List_Nil,
+                        _List_fromArray(
+                          [
+                            $elm$html$Html$text(page.text2)
                           ]
                         )
                       )

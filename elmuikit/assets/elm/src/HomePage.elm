@@ -14,6 +14,12 @@ import Json.Decode as J
 type alias HomeData =
     { title : String
     , nav : NavData
+    , page : PageData
+    }
+
+
+type alias PageData =
+    { body : String
     }
 
 
@@ -35,10 +41,16 @@ genHomeData =
           "url": "profile",
           "active": false
         }
-      ]
+      ],
+      "page": {
+        "home": {
+          "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+        },
+        "profile": null
+      }
   }"""
     in
-    case J.decodeString pageDecoder json of
+    case J.decodeString dataDecoder json of
         Ok data ->
             Ok data
 
@@ -46,15 +58,26 @@ genHomeData =
             Err (J.errorToString jsonError)
 
 
-pageDecoder : J.Decoder HomeData
-pageDecoder =
-    J.map2 HomeData
+dataDecoder : J.Decoder HomeData
+dataDecoder =
+    J.map3 HomeData
         (J.field "title" J.string)
         (J.field "nav" navDecoder)
+        (J.field "page" (J.field "home" pageDecoder))
+
+
+pageDecoder : J.Decoder PageData
+pageDecoder =
+    J.map PageData
+        (J.field "body" J.string)
 
 
 homePageView : HomeData -> Browser.Document Msg
 homePageView data =
+    let
+        page =
+            data.page
+    in
     { title = data.title
     , body =
         [ div [ class "uk-container uk-margin-left" ]
@@ -62,7 +85,7 @@ homePageView data =
                 data.nav
             , h2 []
                 [ text data.title ]
-            , p [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor" ]
+            , p [] [ text page.body ]
             ]
         ]
     }
