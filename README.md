@@ -40,7 +40,7 @@ assets/elm/src/
 
 ## TODOs
 
-- [ ] Pull the Data from a server
+- [x] Pull the Data from a server
 - [x] Add UIKit layout
 - [x] Read the Data for the Model from JSON strings
 - [x] Configure Phoenix to to return the right Elm page on different browser URL calls

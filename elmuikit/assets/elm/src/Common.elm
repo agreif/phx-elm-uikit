@@ -1,14 +1,21 @@
 module Common exposing
-    ( Msg(..)
+    ( HomeData
+    , HomePageData
+    , Msg(..)
     , NavData
+    , ProfilePageData
+    , fetchData
+    , homePageDecoder
     , navDecoder
     , navView
     , pageView
+    , profilePageDecoder
     )
 
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Http
 import Json.Decode as J
 import Url
 
@@ -20,6 +27,70 @@ import Url
 type Msg
     = LinkClicked Browser.UrlRequest
     | UrlChanged Url.Url
+    | GotProfileData (Result Http.Error ProfilePageData)
+    | GotHomeData (Result Http.Error HomePageData)
+
+
+
+-- DATA - HOME
+
+
+type alias HomePageData =
+    { title : String
+    , nav : NavData
+    , home : HomeData
+    }
+
+
+type alias HomeData =
+    { body : String
+    }
+
+
+homePageDecoder : J.Decoder HomePageData
+homePageDecoder =
+    J.map3 HomePageData
+        (J.field "title" J.string)
+        (J.field "nav" navDecoder)
+        (J.field "page" (J.field "home" homeDecoder))
+
+
+homeDecoder : J.Decoder HomeData
+homeDecoder =
+    J.map HomeData
+        (J.field "body" J.string)
+
+
+
+-- DATA - PROFILE
+
+
+type alias ProfilePageData =
+    { title : String
+    , nav : NavData
+    , profile : ProfileData
+    }
+
+
+type alias ProfileData =
+    { text1 : String
+    , text2 : String
+    }
+
+
+profilePageDecoder : J.Decoder ProfilePageData
+profilePageDecoder =
+    J.map3 ProfilePageData
+        (J.field "title" J.string)
+        (J.field "nav" navDecoder)
+        (J.field "page" (J.field "profile" profileDecoder))
+
+
+profileDecoder : J.Decoder ProfileData
+profileDecoder =
+    J.map2 ProfileData
+        (J.field "text1" J.string)
+        (J.field "text2" J.string)
 
 
 
@@ -112,3 +183,25 @@ pageView title nav bodyElems =
             )
         ]
     }
+
+
+
+-- HELPERS
+
+
+fetchData : Url.Url -> Cmd Msg
+fetchData pageUrl =
+    case pageUrl.path of
+        "/profile" ->
+            Http.get
+                { url =
+                    "https://raw.githubusercontent.com/agreif/phx-elm-uikit/master/sample_page_data/profile_page.json"
+                , expect = Http.expectJson GotProfileData profilePageDecoder
+                }
+
+        _ ->
+            Http.get
+                { url =
+                    "https://raw.githubusercontent.com/agreif/phx-elm-uikit/master/sample_page_data/home_page.json"
+                , expect = Http.expectJson GotHomeData homePageDecoder
+                }

@@ -5,6 +5,8 @@ import Browser.Navigation as Nav
 import Common exposing (..)
 import ErrorPage exposing (..)
 import HomePage exposing (..)
+import Http
+import Json.Decode as J
 import ProfilePage exposing (..)
 import Url
 
@@ -36,49 +38,30 @@ type alias Model =
 
 
 type Page
-    = HomePage HomeData
-    | ProfilePage ProfileData
+    = EmptyPage
+    | HomePage HomePageData
+    | ProfilePage ProfilePageData
     | ErrorPage String
 
 
-getPage : Url.Url -> Page
-getPage url =
-    case url.path of
-        "/profile" ->
-            case genProfileData of
-                Ok data ->
-                    ProfilePage data
-
-                Err error ->
-                    ErrorPage error
-
-        _ ->
-            case genHomeData of
-                Ok data ->
-                    HomePage data
-
-                Err error ->
-                    ErrorPage error
-
-
 init : Maybe String -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init maybeUrlStr url key =
-    case maybeUrlStr of
-        Just urlStr ->
-            case Url.fromString urlStr of
+init maybeInitialPath url key =
+    case maybeInitialPath of
+        Just initialPath ->
+            case Url.fromString initialPath of
                 Just url2 ->
-                    ( Model key (getPage url2)
-                    , Nav.pushUrl key (Url.toString url2)
+                    ( Model key EmptyPage
+                    , Nav.pushUrl key url2.path
                     )
 
                 _ ->
-                    ( Model key (getPage url)
-                    , Cmd.none
+                    ( Model key EmptyPage
+                    , Nav.pushUrl key url.path
                     )
 
         _ ->
-            ( Model key (getPage url)
-            , Cmd.none
+            ( Model key EmptyPage
+            , Nav.pushUrl key url.path
             )
 
 
@@ -97,10 +80,24 @@ update msg model =
                 Browser.External href ->
                     ( model, Nav.load href )
 
-        UrlChanged url ->
-            ( { model | page = getPage url }
-            , Cmd.none
-            )
+        UrlChanged pageUrl ->
+            ( model, fetchData pageUrl )
+
+        GotProfileData result ->
+            case result of
+                Ok data ->
+                    ( { model | page = ProfilePage data }, Cmd.none )
+
+                _ ->
+                    ( { model | page = ErrorPage "http error" }, Cmd.none )
+
+        GotHomeData result ->
+            case result of
+                Ok data ->
+                    ( { model | page = HomePage data }, Cmd.none )
+
+                Err message ->
+                    ( { model | page = ErrorPage "http error" }, Cmd.none )
 
 
 
@@ -124,6 +121,9 @@ view model =
 
         ProfilePage data ->
             profilePageView data
+
+        EmptyPage ->
+            { title = "", body = [] }
 
         ErrorPage message ->
             errorPageView message
