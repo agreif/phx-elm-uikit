@@ -81,18 +81,14 @@ profilePageView data =
         page =
             data.page
     in
-    { title = data.title
-    , body =
-        [ div [ class "uk-container uk-margin-left" ]
-            [ navView
-                data.nav
-            , h2 []
-                [ text data.title ]
-            , b [] [ text "text1: " ]
-            , span [] [ text page.text1 ]
-            , hr [] []
-            , b [] [ text "text2: " ]
-            , span [] [ text page.text2 ]
-            ]
+    pageView
+        data.title
+        data.nav
+        [ h2 []
+            [ text data.title ]
+        , b [] [ text "text1: " ]
+        , span [] [ text page.text1 ]
+        , hr [] []
+        , b [] [ text "text2: " ]
+        , span [] [ text page.text2 ]
         ]
-    }

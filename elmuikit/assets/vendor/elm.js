@@ -9960,125 +9960,130 @@
             )
           );
         };
+        var $author$project$Common$pageView = F3(
+          function(title, nav, bodyElems) {
+            return {
+              body: _List_fromArray(
+                [
+                  A2(
+                    $elm$html$Html$div,
+                    _List_fromArray(
+                      [
+                        $elm$html$Html$Attributes$class("uk-container uk-margin-left")
+                      ]
+                    ),
+                    _Utils_ap(
+                      _List_fromArray(
+                        [
+                          $author$project$Common$navView(nav)
+                        ]
+                      ),
+                      bodyElems
+                    )
+                  )
+                ]
+              ),
+              title
+            };
+          }
+        );
         var $author$project$HomePage$homePageView = function(data) {
           var page = data.page;
-          return {
-            body: _List_fromArray(
+          return A3(
+            $author$project$Common$pageView,
+            data.title,
+            data.nav,
+            _List_fromArray(
               [
                 A2(
-                  $elm$html$Html$div,
+                  $elm$html$Html$h2,
+                  _List_Nil,
                   _List_fromArray(
                     [
-                      $elm$html$Html$Attributes$class("uk-container uk-margin-left")
+                      $elm$html$Html$text(data.title)
                     ]
-                  ),
+                  )
+                ),
+                A2(
+                  $elm$html$Html$b,
+                  _List_Nil,
                   _List_fromArray(
                     [
-                      $author$project$Common$navView(data.nav),
-                      A2(
-                        $elm$html$Html$h2,
-                        _List_Nil,
-                        _List_fromArray(
-                          [
-                            $elm$html$Html$text(data.title)
-                          ]
-                        )
-                      ),
-                      A2(
-                        $elm$html$Html$b,
-                        _List_Nil,
-                        _List_fromArray(
-                          [
-                            $elm$html$Html$text("body: ")
-                          ]
-                        )
-                      ),
-                      A2(
-                        $elm$html$Html$span,
-                        _List_Nil,
-                        _List_fromArray(
-                          [
-                            $elm$html$Html$text(page.body)
-                          ]
-                        )
-                      )
+                      $elm$html$Html$text("body: ")
+                    ]
+                  )
+                ),
+                A2(
+                  $elm$html$Html$span,
+                  _List_Nil,
+                  _List_fromArray(
+                    [
+                      $elm$html$Html$text(page.body)
                     ]
                   )
                 )
               ]
-            ),
-            title: data.title
-          };
+            )
+          );
         };
         var $elm$html$Html$hr = _VirtualDom_node("hr");
         var $author$project$ProfilePage$profilePageView = function(data) {
           var page = data.page;
-          return {
-            body: _List_fromArray(
+          return A3(
+            $author$project$Common$pageView,
+            data.title,
+            data.nav,
+            _List_fromArray(
               [
                 A2(
-                  $elm$html$Html$div,
+                  $elm$html$Html$h2,
+                  _List_Nil,
                   _List_fromArray(
                     [
-                      $elm$html$Html$Attributes$class("uk-container uk-margin-left")
+                      $elm$html$Html$text(data.title)
                     ]
-                  ),
+                  )
+                ),
+                A2(
+                  $elm$html$Html$b,
+                  _List_Nil,
                   _List_fromArray(
                     [
-                      $author$project$Common$navView(data.nav),
-                      A2(
-                        $elm$html$Html$h2,
-                        _List_Nil,
-                        _List_fromArray(
-                          [
-                            $elm$html$Html$text(data.title)
-                          ]
-                        )
-                      ),
-                      A2(
-                        $elm$html$Html$b,
-                        _List_Nil,
-                        _List_fromArray(
-                          [
-                            $elm$html$Html$text("text1: ")
-                          ]
-                        )
-                      ),
-                      A2(
-                        $elm$html$Html$span,
-                        _List_Nil,
-                        _List_fromArray(
-                          [
-                            $elm$html$Html$text(page.text1)
-                          ]
-                        )
-                      ),
-                      A2($elm$html$Html$hr, _List_Nil, _List_Nil),
-                      A2(
-                        $elm$html$Html$b,
-                        _List_Nil,
-                        _List_fromArray(
-                          [
-                            $elm$html$Html$text("text2: ")
-                          ]
-                        )
-                      ),
-                      A2(
-                        $elm$html$Html$span,
-                        _List_Nil,
-                        _List_fromArray(
-                          [
-                            $elm$html$Html$text(page.text2)
-                          ]
-                        )
-                      )
+                      $elm$html$Html$text("text1: ")
+                    ]
+                  )
+                ),
+                A2(
+                  $elm$html$Html$span,
+                  _List_Nil,
+                  _List_fromArray(
+                    [
+                      $elm$html$Html$text(page.text1)
+                    ]
+                  )
+                ),
+                A2($elm$html$Html$hr, _List_Nil, _List_Nil),
+                A2(
+                  $elm$html$Html$b,
+                  _List_Nil,
+                  _List_fromArray(
+                    [
+                      $elm$html$Html$text("text2: ")
+                    ]
+                  )
+                ),
+                A2(
+                  $elm$html$Html$span,
+                  _List_Nil,
+                  _List_fromArray(
+                    [
+                      $elm$html$Html$text(page.text2)
                     ]
                   )
                 )
               ]
-            ),
-            title: data.title
-          };
+            )
+          );
         };
         var $author$project$Main$view = function(model) {
           var _v0 = model.page;

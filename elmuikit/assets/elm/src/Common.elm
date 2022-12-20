@@ -3,6 +3,7 @@ module Common exposing
     , NavData
     , navDecoder
     , navView
+    , pageView
     )
 
 import Browser
@@ -95,3 +96,19 @@ navItemViewLink item =
             ]
             [ text item.label ]
         ]
+
+
+
+-- PAGE VIEW
+
+
+pageView : String -> NavData -> List (Html Msg) -> Browser.Document Msg
+pageView title nav bodyElems =
+    { title = title
+    , body =
+        [ div [ class "uk-container uk-margin-left" ]
+            ([ navView nav ]
+                ++ bodyElems
+            )
+        ]
+    }

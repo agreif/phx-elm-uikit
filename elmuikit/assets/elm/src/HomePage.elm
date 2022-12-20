@@ -78,15 +78,11 @@ homePageView data =
         page =
             data.page
     in
-    { title = data.title
-    , body =
-        [ div [ class "uk-container uk-margin-left" ]
-            [ navView
-                data.nav
-            , h2 []
-                [ text data.title ]
-            , b [] [ text "body: " ]
-            , span [] [ text page.body ]
-            ]
+    pageView
+        data.title
+        data.nav
+        [ h2 []
+            [ text data.title ]
+        , b [] [ text "body: " ]
+        , span [] [ text page.body ]
         ]
-    }
