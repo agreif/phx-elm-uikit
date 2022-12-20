@@ -1,0 +1,22 @@
+{
+    "title": "Home Page",
+    "nav":
+    [
+        {
+            "label": "Home",
+            "url": "home",
+            "active": true
+        },
+        {
+            "label": "Profile",
+            "url": "profile",
+            "active": false
+        }
+    ],
+    "page": {
+        "home": {
+            "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+        },
+        "profile": null
+    }
+}
