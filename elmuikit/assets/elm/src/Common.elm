@@ -13,6 +13,7 @@ module Common exposing
     )
 
 import Browser
+import Browser.Navigation as Nav
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Http
@@ -199,9 +200,12 @@ fetchData pageUrl =
                 , expect = Http.expectJson GotProfileData profilePageDecoder
                 }
 
-        _ ->
+        "/home" ->
             Http.get
                 { url =
                     "https://raw.githubusercontent.com/agreif/phx-elm-uikit/master/sample_page_data/home_page.json"
                 , expect = Http.expectJson GotHomeData homePageDecoder
                 }
+
+        _ ->
+            Nav.load "/home"

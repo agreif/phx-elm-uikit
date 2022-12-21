@@ -10085,6 +10085,7 @@
             A2($elm$json$Json$Decode$field, "home", $author$project$Common$homeDecoder)
           )
         );
+        var $elm$browser$Browser$Navigation$load = _Browser_load;
         var $author$project$Common$ProfilePageData = F3(
           function(title, nav, profile) {
             return { nav, profile, title };
@@ -10114,23 +10115,25 @@
         );
         var $author$project$Common$fetchData = function(pageUrl) {
           var _v0 = pageUrl.path;
-          if (_v0 === "/profile") {
-            return $elm$http$Http$get(
-              {
-                expect: A2($elm$http$Http$expectJson, $author$project$Common$GotProfileData, $author$project$Common$profilePageDecoder),
-                url: "https://raw.githubusercontent.com/agreif/phx-elm-uikit/master/sample_page_data/profile_page.json"
-              }
-            );
-          } else {
-            return $elm$http$Http$get(
-              {
-                expect: A2($elm$http$Http$expectJson, $author$project$Common$GotHomeData, $author$project$Common$homePageDecoder),
-                url: "https://raw.githubusercontent.com/agreif/phx-elm-uikit/master/sample_page_data/home_page.json"
-              }
-            );
+          switch (_v0) {
+            case "/profile":
+              return $elm$http$Http$get(
+                {
+                  expect: A2($elm$http$Http$expectJson, $author$project$Common$GotProfileData, $author$project$Common$profilePageDecoder),
+                  url: "https://raw.githubusercontent.com/agreif/phx-elm-uikit/master/sample_page_data/profile_page.json"
+                }
+              );
+            case "/home":
+              return $elm$http$Http$get(
+                {
+                  expect: A2($elm$http$Http$expectJson, $author$project$Common$GotHomeData, $author$project$Common$homePageDecoder),
+                  url: "https://raw.githubusercontent.com/agreif/phx-elm-uikit/master/sample_page_data/home_page.json"
+                }
+              );
+            default:
+              return $elm$browser$Browser$Navigation$load("/home");
           }
         };
-        var $elm$browser$Browser$Navigation$load = _Browser_load;
         var $elm$url$Url$addPort = F2(
           function(maybePort, starter) {
             if (maybePort.$ === "Nothing") {
@@ -10188,13 +10191,13 @@
               case "LinkClicked":
                 var urlRequest = msg.a;
                 if (urlRequest.$ === "Internal") {
-                  var url = urlRequest.a;
+                  var pageUrl = urlRequest.a;
                   return _Utils_Tuple2(
                     model,
                     A2(
                       $elm$browser$Browser$Navigation$pushUrl,
                       model.key,
-                      $elm$url$Url$toString(url)
+                      $elm$url$Url$toString(pageUrl)
                     )
                   );
                 } else {

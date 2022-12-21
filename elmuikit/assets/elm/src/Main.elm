@@ -58,8 +58,8 @@ update msg model =
     case msg of
         LinkClicked urlRequest ->
             case urlRequest of
-                Browser.Internal url ->
-                    ( model, Nav.pushUrl model.key (Url.toString url) )
+                Browser.Internal pageUrl ->
+                    ( model, Nav.pushUrl model.key (Url.toString pageUrl) )
 
                 Browser.External href ->
                     ( model, Nav.load href )
