@@ -3276,13 +3276,9 @@
             }))));
           });
         }
-        var $elm$core$Maybe$Just = function(a) {
-          return { $: "Just", a };
-        };
         var $author$project$Common$LinkClicked = function(a) {
           return { $: "LinkClicked", a };
         };
-        var $elm$core$Maybe$Nothing = { $: "Nothing" };
         var $author$project$Common$UrlChanged = function(a) {
           return { $: "UrlChanged", a };
         };
@@ -3400,6 +3396,10 @@
         };
         var $elm$core$Basics$False = { $: "False" };
         var $elm$core$Basics$add = _Basics_add;
+        var $elm$core$Maybe$Just = function(a) {
+          return { $: "Just", a };
+        };
+        var $elm$core$Maybe$Nothing = { $: "Nothing" };
         var $elm$core$String$all = _String_all;
         var $elm$core$Basics$and = _Basics_and;
         var $elm$core$Basics$append = _Utils_append;
@@ -9726,32 +9726,13 @@
         );
         var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
         var $author$project$Main$init = F3(
-          function(maybeInitialPath, url, key) {
-            if (maybeInitialPath.$ === "Just") {
-              var initialPath = maybeInitialPath.a;
-              var _v1 = $elm$url$Url$fromString(initialPath);
-              if (_v1.$ === "Just") {
-                var url2 = _v1.a;
-                return _Utils_Tuple2(
-                  A2($author$project$Main$Model, key, $author$project$Main$EmptyPage),
-                  A2($elm$browser$Browser$Navigation$pushUrl, key, url2.path)
-                );
-              } else {
-                return _Utils_Tuple2(
-                  A2($author$project$Main$Model, key, $author$project$Main$EmptyPage),
-                  A2($elm$browser$Browser$Navigation$pushUrl, key, url.path)
-                );
-              }
-            } else {
-              return _Utils_Tuple2(
-                A2($author$project$Main$Model, key, $author$project$Main$EmptyPage),
-                A2($elm$browser$Browser$Navigation$pushUrl, key, url.path)
-              );
-            }
+          function(flags, url, key) {
+            return _Utils_Tuple2(
+              A2($author$project$Main$Model, key, $author$project$Main$EmptyPage),
+              A2($elm$browser$Browser$Navigation$pushUrl, key, url.path)
+            );
           }
         );
-        var $elm$json$Json$Decode$null = _Json_decodeNull;
-        var $elm$json$Json$Decode$oneOf = _Json_oneOf;
         var $elm$core$Platform$Sub$batch = _Platform_batch;
         var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
         var $author$project$Main$subscriptions = function(_v0) {
@@ -10527,14 +10508,7 @@
           { init: $author$project$Main$init, onUrlChange: $author$project$Common$UrlChanged, onUrlRequest: $author$project$Common$LinkClicked, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view }
         );
         _Platform_export({ "Main": { "init": $author$project$Main$main(
-          $elm$json$Json$Decode$oneOf(
-            _List_fromArray(
-              [
-                $elm$json$Json$Decode$null($elm$core$Maybe$Nothing),
-                A2($elm$json$Json$Decode$map, $elm$core$Maybe$Just, $elm$json$Json$Decode$string)
-              ]
-            )
-          )
+          $elm$json$Json$Decode$succeed(_Utils_Tuple0)
         )({ "versions": { "elm": "0.19.1" }, "types": { "message": "Common.Msg", "aliases": { "Common.HomeData": { "args": [], "type": "{ body : String.String }" }, "Common.HomePageData": { "args": [], "type": "{ title : String.String, nav : Common.NavData, home : Common.HomeData }" }, "Common.NavData": { "args": [], "type": "{ items : List.List Common.NavItem }" }, "Common.NavItem": { "args": [], "type": "{ label : String.String, url : String.String, active : Basics.Bool }" }, "Common.ProfileData": { "args": [], "type": "{ text1 : String.String, text2 : String.String }" }, "Common.ProfilePageData": { "args": [], "type": "{ title : String.String, nav : Common.NavData, profile : Common.ProfileData }" }, "Url.Url": { "args": [], "type": "{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }" } }, "unions": { "Common.Msg": { "args": [], "tags": { "LinkClicked": ["Browser.UrlRequest"], "UrlChanged": ["Url.Url"], "GotProfileData": ["Result.Result Http.Error Common.ProfilePageData"], "GotHomeData": ["Result.Result Http.Error Common.HomePageData"] } }, "Basics.Bool": { "args": [], "tags": { "True": [], "False": [] } }, "Http.Error": { "args": [], "tags": { "BadUrl": ["String.String"], "Timeout": [], "NetworkError": [], "BadStatus": ["Basics.Int"], "BadBody": ["String.String"] } }, "Basics.Int": { "args": [], "tags": { "Int": [] } }, "List.List": { "args": ["a"], "tags": {} }, "Maybe.Maybe": { "args": ["a"], "tags": { "Just": ["a"], "Nothing": [] } }, "Url.Protocol": { "args": [], "tags": { "Http": [], "Https": [] } }, "Result.Result": { "args": ["error", "value"], "tags": { "Ok": ["value"], "Err": ["error"] } }, "String.String": { "args": [], "tags": { "String": [] } }, "Browser.UrlRequest": { "args": [], "tags": { "Internal": ["Url.Url"], "External": ["String.String"] } } } } }) } });
       })(exports);
     }
@@ -10544,7 +10518,6 @@
   var import_Main = __toESM(require_Main());
   var $elmDiv = document.querySelector("#elm-target");
   import_Main.Elm.Main.init({
-    node: $elmDiv,
-    flags: $elmDiv.getAttribute("page")
+    node: $elmDiv
   });
 })();

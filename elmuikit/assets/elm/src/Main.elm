@@ -15,7 +15,7 @@ import Url
 -- MAIN
 
 
-main : Program (Maybe String) Model Msg
+main : Program () Model Msg
 main =
     Browser.application
         { init = init
@@ -44,25 +44,9 @@ type Page
     | ErrorPage String
 
 
-init : Maybe String -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init maybeInitialPath url key =
-    case maybeInitialPath of
-        Just initialPath ->
-            case Url.fromString initialPath of
-                Just url2 ->
-                    ( Model key EmptyPage
-                    , Nav.pushUrl key url2.path
-                    )
-
-                _ ->
-                    ( Model key EmptyPage
-                    , Nav.pushUrl key url.path
-                    )
-
-        _ ->
-            ( Model key EmptyPage
-            , Nav.pushUrl key url.path
-            )
+init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init flags url key =
+    ( Model key EmptyPage, Nav.pushUrl key url.path )
 
 
 
